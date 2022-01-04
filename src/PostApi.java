@@ -13,18 +13,19 @@ public class PostApi {
 		RestAssured.baseURI="https://reqres.in/";
 		Response res=given().
 		given().
-		body("{\r\n"
-				+ "    \"name\": \"morpheus\",\r\n"
-				+ "    \"job\": \"leader\"\r\n"
-				+ "}").
+		params("page",2).
+//		body("{\r\n"
+//				+ "    \"name\": \"morpheus\",\r\n"
+//				+ "    \"job\": \"leader\"\r\n"
+//				+ "}").
 		when().
-        post("/api/users/").
-        then().assertThat().statusCode(201).and().extract().response();
+        get("/api/users/").
+        then().assertThat().statusCode(200).and().extract().response();
 		String ResTostring = res.asString();
-		System.out.println(res.asString());
+		//System.out.println(res.asString());
 		
 		JsonPath js=new JsonPath(ResTostring);
-		String id=js.get("id");
+		String id=js.get("data[0].avatar");
 		System.out.println(id);
 	}
 
